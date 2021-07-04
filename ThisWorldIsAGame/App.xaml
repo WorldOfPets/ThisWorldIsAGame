@@ -1,0 +1,182 @@
+﻿<Application x:Class="ThisWorldIsAGame.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ThisWorldIsAGame"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--BORDER для параметров-->
+        <Style TargetType="Border" x:Key="StyleForBorderForParametr">
+            <Setter Property="BorderBrush" Value="#0F9D58"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <!--TEXTBLOCK для параметров-->
+        <Style TargetType="TextBlock" x:Key="StyleForTBForParametr">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#DB4437"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <!--TEXTBLOCK для параметров-->
+        <Style TargetType="TextBlock" x:Key="StyleForTBForParametrLvl">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#4285F4"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+        <!--PROGRESSBAR для параметров-->
+        <Style TargetType="ProgressBar" x:Key="StyleForProgressBarParameter">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Maximum" Value="100"/>
+            <Setter Property="Background" Value="#E7E6DD"/>
+            <Setter Property="Foreground" Value="#0F9D58"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Width" Value="240"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <!--BORDER для ProgressBar-->
+        <Style TargetType="Border" x:Key="StyleForBorderForProgressBar">
+            <Setter Property="BorderBrush" Value="#F4B400"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        <!--TEXTBLOCK для опыта-->
+        <Style TargetType="TextBlock" x:Key="TBforExp">
+            <Setter Property="Margin" Value="150 65 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="#0F9D58"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+        <!--BORDER для DataGrid-->
+        <Style TargetType="Border" x:Key="BorderForDataGrid">
+            <Setter Property="BorderBrush" Value="#4285F4"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Margin" Value="10 5 10 60"/>
+        </Style>
+        <!--DATAGRID выбоp строки-->
+        <Style TargetType="DataGridCell" x:Key="RowSeletStyle">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#4285F4"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--DATAGRID строки-->
+        <Style TargetType="DataGridRow" x:Key="DataGridRowStyleP">
+            <Setter Property="Selector.Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#4285F4"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <!--DATAGRID-->
+        <Style TargetType="DataGrid" x:Key="DataGridStyleP">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HeadersVisibility" Value="None"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="CellStyle" Value="{StaticResource RowSeletStyle}"/>
+            <Setter Property="RowStyle" Value="{StaticResource DataGridRowStyleP}"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="SelectionUnit" Value="Cell"/>
+        </Style>
+        <!--BORDER для DataGridплюс-->
+        <Style TargetType="Border" x:Key="BorderForDataGridPlus">
+            <Setter Property="Background" Value="#0F9D58"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <!--BORDER для DataGridminus-->
+        <Style TargetType="Border" x:Key="BorderForDataGridMinus">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Background" Value="#DB4437"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <!--TEXTBLOCK plus-->
+        <Style TargetType="TextBlock" x:Key="TBPlus">
+            <Setter Property="Margin" Value="0 -2 0 0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Text" Value="+"/>
+        </Style>
+        <!--TEXTBLOCK minus-->
+        <Style TargetType="TextBlock" x:Key="TBMinus">
+            <Setter Property="Margin" Value="0 -2 0 0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Text" Value="X"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <!--TEXTBLOCK edit-->
+        <Style TargetType="TextBlock" x:Key="TBedit">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <!--BORDER btnadd-->
+        <Style TargetType="Border" x:Key="BorderBtnAdd">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Green"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="#0F9D58"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="30 0 30 0"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <!--BORDER btnedit-->
+        <Style TargetType="Border" x:Key="BorderBtnEdit">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="#DB4437"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="30 0 30 0"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="TBaddAction">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>

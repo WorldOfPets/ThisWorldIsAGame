@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище LabServEvgPModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="ActionExp" Type="int" />
+          <Property Name="NumberOfTimes" Type="int" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Strength" Type="int" />
+          <Property Name="Intellect" Type="int" />
+          <Property Name="Skill" Type="int" />
+          <Property Name="GoodHabits" Type="int" />
+          <Property Name="BadHabits" Type="int" />
+        </EntityType>
+        <EntityType Name="ParameterLevel">
+          <Key>
+            <PropertyRef Name="lvl" />
+          </Key>
+          <Property Name="lvl" Type="int" Nullable="false" />
+          <Property Name="ParamExp" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserAction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" />
+          <Property Name="IdAction" Type="int" />
+          <Property Name="Parameter" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserG">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Exp" Type="int" />
+          <Property Name="IdParam" Type="int" />
+        </EntityType>
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="lvl" />
+          </Key>
+          <Property Name="lvl" Type="int" Nullable="false" />
+          <Property Name="UserLvlExp" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="TextLevel" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_UserAction_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="0..1" />
+          <End Role="UserAction" Type="Self.UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="IdAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAction_UserG">
+          <End Role="UserG" Type="Self.UserG" Multiplicity="0..1" />
+          <End Role="UserAction" Type="Self.UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserG">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserG_Parameter">
+          <End Role="Parameter" Type="Self.Parameter" Multiplicity="0..1" />
+          <End Role="UserG" Type="Self.UserG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserG">
+              <PropertyRef Name="IdParam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище LabServEvgPModelContainer">
+          <EntitySet Name="Action" EntityType="Self.Action" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParameterLevel" EntityType="Self.ParameterLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAction" EntityType="Self.UserAction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserG" EntityType="Self.UserG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLevel" EntityType="Self.UserLevel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserAction_Action" Association="Self.FK_UserAction_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="UserAction" EntitySet="UserAction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAction_UserG" Association="Self.FK_UserAction_UserG">
+            <End Role="UserG" EntitySet="UserG" />
+            <End Role="UserAction" EntitySet="UserAction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserG_Parameter" Association="Self.FK_UserG_Parameter">
+            <End Role="Parameter" EntitySet="Parameter" />
+            <End Role="UserG" EntitySet="UserG" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LabServEvgPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ActionExp" Type="Int32" />
+          <Property Name="NumberOfTimes" Type="Int32" />
+          <NavigationProperty Name="UserAction" Relationship="Self.FK_UserAction_Action" FromRole="Action" ToRole="UserAction" />
+        </EntityType>
+        <EntityType Name="Parameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Strength" Type="Int32" />
+          <Property Name="Intellect" Type="Int32" />
+          <Property Name="Skill" Type="Int32" />
+          <Property Name="GoodHabits" Type="Int32" />
+          <Property Name="BadHabits" Type="Int32" />
+          <NavigationProperty Name="UserG" Relationship="Self.FK_UserG_Parameter" FromRole="Parameter" ToRole="UserG" />
+        </EntityType>
+        <EntityType Name="ParameterLevel">
+          <Key>
+            <PropertyRef Name="lvl" />
+          </Key>
+          <Property Name="lvl" Type="Int32" Nullable="false" />
+          <Property Name="ParamExp" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserAction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" />
+          <Property Name="IdAction" Type="Int32" />
+          <Property Name="Parameter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Action" Relationship="Self.FK_UserAction_Action" FromRole="UserAction" ToRole="Action" />
+          <NavigationProperty Name="UserG" Relationship="Self.FK_UserAction_UserG" FromRole="UserAction" ToRole="UserG" />
+        </EntityType>
+        <EntityType Name="UserG">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exp" Type="Int32" />
+          <Property Name="IdParam" Type="Int32" />
+          <NavigationProperty Name="Parameter" Relationship="Self.FK_UserG_Parameter" FromRole="UserG" ToRole="Parameter" />
+          <NavigationProperty Name="UserAction" Relationship="Self.FK_UserAction_UserG" FromRole="UserG" ToRole="UserAction" />
+        </EntityType>
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="lvl" />
+          </Key>
+          <Property Name="lvl" Type="Int32" Nullable="false" />
+          <Property Name="UserLvlExp" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TextLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_UserAction_Action">
+          <End Role="Action" Type="Self.Action" Multiplicity="0..1" />
+          <End Role="UserAction" Type="Self.UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Action">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="IdAction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserG_Parameter">
+          <End Role="Parameter" Type="Self.Parameter" Multiplicity="0..1" />
+          <End Role="UserG" Type="Self.UserG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parameter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserG">
+              <PropertyRef Name="IdParam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAction_UserG">
+          <End Role="UserG" Type="Self.UserG" Multiplicity="0..1" />
+          <End Role="UserAction" Type="Self.UserAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserG">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAction">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GameEvgPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Action" EntityType="Self.Action" />
+          <EntitySet Name="Parameter" EntityType="Self.Parameter" />
+          <EntitySet Name="ParameterLevel" EntityType="Self.ParameterLevel" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="UserAction" EntityType="Self.UserAction" />
+          <EntitySet Name="UserG" EntityType="Self.UserG" />
+          <EntitySet Name="UserLevel" EntityType="Self.UserLevel" />
+          <AssociationSet Name="FK_UserAction_Action" Association="Self.FK_UserAction_Action">
+            <End Role="Action" EntitySet="Action" />
+            <End Role="UserAction" EntitySet="UserAction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserG_Parameter" Association="Self.FK_UserG_Parameter">
+            <End Role="Parameter" EntitySet="Parameter" />
+            <End Role="UserG" EntitySet="UserG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAction_UserG" Association="Self.FK_UserAction_UserG">
+            <End Role="UserG" EntitySet="UserG" />
+            <End Role="UserAction" EntitySet="UserAction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LabServEvgPModelContainer" CdmEntityContainer="GameEvgPEntities">
+          <EntitySetMapping Name="Action">
+            <EntityTypeMapping TypeName="LabServEvgPModel.Action">
+              <MappingFragment StoreEntitySet="Action">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ActionExp" ColumnName="ActionExp" />
+                <ScalarProperty Name="NumberOfTimes" ColumnName="NumberOfTimes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parameter">
+            <EntityTypeMapping TypeName="LabServEvgPModel.Parameter">
+              <MappingFragment StoreEntitySet="Parameter">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Strength" ColumnName="Strength" />
+                <ScalarProperty Name="Intellect" ColumnName="Intellect" />
+                <ScalarProperty Name="Skill" ColumnName="Skill" />
+                <ScalarProperty Name="GoodHabits" ColumnName="GoodHabits" />
+                <ScalarProperty Name="BadHabits" ColumnName="BadHabits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParameterLevel">
+            <EntityTypeMapping TypeName="LabServEvgPModel.ParameterLevel">
+              <MappingFragment StoreEntitySet="ParameterLevel">
+                <ScalarProperty Name="lvl" ColumnName="lvl" />
+                <ScalarProperty Name="ParamExp" ColumnName="ParamExp" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="LabServEvgPModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAction">
+            <EntityTypeMapping TypeName="LabServEvgPModel.UserAction">
+              <MappingFragment StoreEntitySet="UserAction">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdAction" ColumnName="IdAction" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserG">
+            <EntityTypeMapping TypeName="LabServEvgPModel.UserG">
+              <MappingFragment StoreEntitySet="UserG">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Exp" ColumnName="Exp" />
+                <ScalarProperty Name="IdParam" ColumnName="IdParam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLevel">
+            <EntityTypeMapping TypeName="LabServEvgPModel.UserLevel">
+              <MappingFragment StoreEntitySet="UserLevel">
+                <ScalarProperty Name="lvl" ColumnName="lvl" />
+                <ScalarProperty Name="UserLvlExp" ColumnName="UserLvlExp" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TextLevel" ColumnName="TextLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
